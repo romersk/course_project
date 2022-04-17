@@ -48,6 +48,7 @@ public class SecurityConfigurationEvokimovdRD extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         //http.authorizeHttpRequests().anyRequest().permitAll();
         //http.authorizeHttpRequests().anyRequest().authenticated();
+        http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                         .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                         .authorizeHttpRequests((request) -> request.antMatchers("/api/v1/auth/login").permitAll()

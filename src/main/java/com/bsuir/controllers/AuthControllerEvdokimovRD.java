@@ -19,7 +19,7 @@ import java.security.spec.InvalidKeySpecException;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthControllerEvdokimovRD {
 
     @Autowired

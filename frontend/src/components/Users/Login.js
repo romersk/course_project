@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   Row,
@@ -7,6 +7,7 @@ import {
   InputGroup,
   FormControl,
   Button,
+  Alert,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,114 +17,128 @@ import {
   faUndo,
 } from "@fortawesome/free-solid-svg-icons";
 import { authenticateUser } from "../../services/index";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.initialState;
-  }
+const Login = (props) => {
+  const [error, setError] = useState();
+  const [show, setShow] = useState(true);
 
-  initialState = {
-    email: "",
+  const initialState = {
+    userName: "",
     password: "",
   };
 
-  validateUser = () => {
-    this.props.authenticateUser(this.state.email, this.state.password);
+  const [user, setUser] = useState(initialState);
+
+  const credChange = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
   };
 
-  resetLogin = () => {
-    this.setState(() => this.initialState);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const validateUser = () => {
+    dispatch(authenticateUser(user.userName, user.password))
+      .then((response) => {
+        console.log(response.data);
+        return navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setShow(true);
+        resetLoginForm();
+        setError("Логин или пароль неверный");
+      });
   };
 
-  credChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+  const resetLoginForm = () => {
+    setUser(initialState);
   };
-
-  render() {
-    const { email, password } = this.state;
-
-    return (
-      <Row className="justify-content-md-center">
-        <Col xs={5}>
-          <Card className={"border border-dark bg-dark text-white"}>
-            <Card.Header>
-              <FontAwesomeIcon icon={faSignInAlt} /> Вход
-            </Card.Header>
-            <Card.Body>
-              <Form>
-                <Form.Group as={Col}>
-                  <InputGroup>
-                    <InputGroup.Text>
-                      <FontAwesomeIcon icon={faCircleUser} />
-                    </InputGroup.Text>
-                    <FormControl
-                      required
-                      autoComplete="off"
-                      type="text"
-                      name="email"
-                      value={email}
-                      onChange={this.credChange}
-                      className={"bg-dark text-white"}
-                      placeholder="Введите никнейм"
-                    />
-                  </InputGroup>
-                </Form.Group>
-                <Form.Group as={Col}>
-                  <InputGroup>
-                    <InputGroup.Text>
-                      <FontAwesomeIcon icon={faLock} />
-                    </InputGroup.Text>
-                    <FormControl
-                      required
-                      autoComplete="off"
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={this.credChange}
-                      className={"bg-dark text-white"}
-                      placeholder="Введите пароль"
-                    />
-                  </InputGroup>
-                </Form.Group>
-              </Form>
-            </Card.Body>
-            <Card.Footer style={{ textAlign: "center" }}>
-              <Button
-                size="sm"
-                type="button"
-                variant="success"
-                onClick={this.validateUser}
-                disabled={
-                  this.state.email.length === 0 ||
-                  this.state.password.length === 0
-                }
-                style={{ margin: "10px" }}
-              >
-                <FontAwesomeIcon icon={faSignInAlt} /> Войти
-              </Button>
-              <Button
-                size="sm"
-                type="button"
-                variant="info"
-                onClick={this.resetLogin}
-                disabled={
-                  this.state.email.length === 0 &&
-                  this.state.password.length === 0
-                }
-                style={{ margin: "10px" }}
-              >
-                <FontAwesomeIcon icon={faUndo} /> Сброс
-              </Button>
-            </Card.Footer>
-          </Card>
-        </Col>
-      </Row>
-    );
-  }
-}
+  return (
+    <Row className="justify-content-md-center">
+      <Col xs={5}>
+        {show && props.message && (
+          <Alert variant="success" onClose={() => setShow(false)} dismissible>
+            {props.message}
+          </Alert>
+        )}
+        {show && error && (
+          <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+            {error}
+          </Alert>
+        )}
+        <Card className={"border border-dark bg-dark text-white"}>
+          <Card.Header>
+            <FontAwesomeIcon icon={faSignInAlt} /> Вход
+          </Card.Header>
+          <Card.Body>
+            <Form>
+              <Form.Group as={Col}>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <FontAwesomeIcon icon={faCircleUser} />
+                  </InputGroup.Text>
+                  <FormControl
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="userName"
+                    value={user.userName}
+                    onChange={credChange}
+                    className={"bg-dark text-white"}
+                    placeholder="Введите никнейм"
+                  />
+                </InputGroup>
+              </Form.Group>
+              <Form.Group as={Col}>
+                <InputGroup>
+                  <InputGroup.Text>
+                    <FontAwesomeIcon icon={faLock} />
+                  </InputGroup.Text>
+                  <FormControl
+                    required
+                    autoComplete="off"
+                    type="password"
+                    name="password"
+                    value={user.password}
+                    onChange={credChange}
+                    className={"bg-dark text-white"}
+                    placeholder="Введите пароль"
+                  />
+                </InputGroup>
+              </Form.Group>
+            </Form>
+          </Card.Body>
+          <Card.Footer style={{ textAlign: "center" }}>
+            <Button
+              size="sm"
+              type="button"
+              variant="success"
+              onClick={validateUser}
+              disabled={user.userNamelength === 0 || user.password.length === 0}
+              style={{ margin: "10px" }}
+            >
+              <FontAwesomeIcon icon={faSignInAlt} /> Войти
+            </Button>
+            <Button
+              size="sm"
+              type="button"
+              variant="info"
+              onClick={resetLoginForm}
+              disabled={
+                user.userName.length === 0 && user.password.length === 0
+              }
+              style={{ margin: "10px" }}
+            >
+              <FontAwesomeIcon icon={faUndo} /> Сброс
+            </Button>
+          </Card.Footer>
+        </Card>
+      </Col>
+    </Row>
+  );
+};
 
 export default Login;
