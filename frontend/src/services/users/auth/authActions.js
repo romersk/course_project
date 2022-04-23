@@ -13,7 +13,8 @@ export const authenticateUser = (userName, password) => async (dispatch) => {
       credentials
     );
     localStorage.setItem("jwtToken", response.data.token);
-    dispatch(success({ username: response.data.name, isLoggedIn: true }));
+    console.log(response.data.fio);
+    dispatch(success({ username: response.data.fio, isLoggedIn: true }));
     return Promise.resolve(response.data);
   } catch (error) {
     dispatch(failure());

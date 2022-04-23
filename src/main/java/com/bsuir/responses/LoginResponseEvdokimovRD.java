@@ -2,6 +2,24 @@ package com.bsuir.responses;
 
 public class LoginResponseEvdokimovRD {
     private String token;
+    private String username;
+    private String fio;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFio() {
+        return fio;
+    }
+
+    public void setFio(String fio) {
+        this.fio = fio;
+    }
 
     public String getToken() {
         return token;

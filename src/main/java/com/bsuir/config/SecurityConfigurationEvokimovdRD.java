@@ -1,6 +1,5 @@
 package com.bsuir.config;
 
-import com.bsuir.services.UserServiceEvdokimovRD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +31,14 @@ public class SecurityConfigurationEvokimovdRD extends WebSecurityConfigurerAdapt
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+        auth.inMemoryAuthentication()
+                .withUser("user")
+                .password("user")
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("admin")
+                .password("admin")
+                .authorities("ROLE_ADMIN");
     }
 
     @Bean
@@ -46,8 +53,6 @@ public class SecurityConfigurationEvokimovdRD extends WebSecurityConfigurerAdapt
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //http.authorizeHttpRequests().anyRequest().permitAll();
-        //http.authorizeHttpRequests().anyRequest().authenticated();
         http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                         .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()

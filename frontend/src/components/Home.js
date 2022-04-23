@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <Alert style={{ backgroundColor: "#343A40", color: "#ffffff80" }}>
-      Привет, {auth.username} !
+      Привет, {auth.fio} !
     </Alert>
   );
 };

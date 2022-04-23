@@ -1,4 +1,4 @@
-package com.bsuir.entities;
+package com.bsuir.users.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

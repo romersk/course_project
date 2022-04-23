@@ -1,6 +1,6 @@
 package com.bsuir.config;
 
-import com.bsuir.services.UserServiceEvdokimovRD;
+import com.bsuir.users.service.UserServiceEvdokimovRD;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

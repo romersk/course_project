@@ -1,4 +1,4 @@
-package com.bsuir.requests;
+package com.bsuir.users.request;
 
 public class AuthenticationRequestEvdokimovRD {
 
