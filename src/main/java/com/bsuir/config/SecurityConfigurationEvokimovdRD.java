@@ -56,7 +56,7 @@ public class SecurityConfigurationEvokimovdRD extends WebSecurityConfigurerAdapt
         http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                         .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
-                        .authorizeHttpRequests((request) -> request.antMatchers("/api/v1/auth/login").permitAll()
+                        .authorizeHttpRequests((request) -> request.antMatchers("/api/v1/auth/**").permitAll()
                                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated())
                 .addFilterBefore(jwtRequestFilter,
                         UsernamePasswordAuthenticationFilter.class);

@@ -13,8 +13,13 @@ export const authenticateUser = (userName, password) => async (dispatch) => {
       credentials
     );
     localStorage.setItem("jwtToken", response.data.token);
-    console.log(response.data.fio);
-    dispatch(success({ username: response.data.fio, isLoggedIn: true }));
+    dispatch(
+      success({
+        username: response.data.fio,
+        isLoggedIn: true,
+        role: response.data.role,
+      })
+    );
     return Promise.resolve(response.data);
   } catch (error) {
     dispatch(failure());
@@ -26,7 +31,7 @@ export const logoutUser = () => {
   return (dispatch) => {
     dispatch(logoutRequest());
     localStorage.removeItem("jwtToken");
-    dispatch(success({ username: "", isLoggedIn: false }));
+    dispatch(success({ username: "", isLoggedIn: false, role: "" }));
   };
 };
 

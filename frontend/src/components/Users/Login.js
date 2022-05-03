@@ -42,8 +42,9 @@ const Login = (props) => {
   const validateUser = () => {
     dispatch(authenticateUser(user.userName, user.password))
       .then((response) => {
-        console.log(response.data);
-        return navigate("/home");
+        if (response.role === "Администратор") {
+          return navigate("/admin/home");
+        }
       })
       .catch((error) => {
         console.log(error.message);
@@ -117,7 +118,9 @@ const Login = (props) => {
               type="button"
               variant="success"
               onClick={validateUser}
-              disabled={user.userNamelength === 0 || user.password.length === 0}
+              disabled={
+                user.userName.length === 0 || user.password.length === 0
+              }
               style={{ margin: "10px" }}
             >
               <FontAwesomeIcon icon={faSignInAlt} /> Войти

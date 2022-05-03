@@ -4,6 +4,15 @@ public class LoginResponseEvdokimovRD {
     private String token;
     private String username;
     private String fio;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getUsername() {
         return username;

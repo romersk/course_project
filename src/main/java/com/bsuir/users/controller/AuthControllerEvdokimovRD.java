@@ -1,20 +1,20 @@
 package com.bsuir.users.controller;
 
 import com.bsuir.config.JWTTokenHelperEvdokimovRD;
-import com.bsuir.shared.search.Page;
 import com.bsuir.users.dto.UsersDtoEvdokimovRD;
 import com.bsuir.users.entity.AuthorityEvdokimovRD;
 import com.bsuir.users.entity.PersonEvdokimovRD;
 import com.bsuir.users.entity.UserEvdokimovRD;
 import com.bsuir.users.request.AuthenticationRequestEvdokimovRD;
 import com.bsuir.responses.LoginResponseEvdokimovRD;
+import com.bsuir.users.request.UserRequestEvdokimovRD;
 import com.bsuir.users.service.UserServiceEvdokimovRD;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +29,8 @@ import java.util.List;
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthControllerEvdokimovRD {
+
+    private static Logger log = LoggerFactory.getLogger(AuthControllerEvdokimovRD.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -56,6 +58,17 @@ public class AuthControllerEvdokimovRD {
         UserEvdokimovRD userObj = (UserEvdokimovRD) service.loadUserByUsername(loginResponseEvdokimovRD.getUsername());
         loginResponseEvdokimovRD.setFio(userObj.getPerson().getFirstName() + " " + userObj.getPerson().getSecondName());
 
+        List<AuthorityEvdokimovRD> authorithies = (List<AuthorityEvdokimovRD>) userObj.getAuthorities();
+        if ("ADMIN".equals(authorithies.get(0).getRoleCode())) {
+            loginResponseEvdokimovRD.setRole("Администратор");
+        } else if ("EXPERT".equals(authorithies.get(0))) {
+            loginResponseEvdokimovRD.setRole("Эксперт");
+        } else if ("LAWYER".equals(authorithies.get(0))) {
+            loginResponseEvdokimovRD.setRole("Юрист");
+        } else {
+            loginResponseEvdokimovRD.setRole("Пользователь");
+        }
+
         return ResponseEntity.ok(loginResponseEvdokimovRD);
     }
 
@@ -70,15 +83,10 @@ public class AuthControllerEvdokimovRD {
         return ResponseEntity.ok(personEvdokimovRD);
     }
 
-    @GetMapping("/auth/users")
-    public ResponseEntity<Page<UsersDtoEvdokimovRD>> findAll(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
-        UserEvdokimovRD userObj = (UserEvdokimovRD) service.loadUserByUsername(user.getName());
-        List<AuthorityEvdokimovRD> auth = (List<AuthorityEvdokimovRD>) userObj.getAuthorities();
-        if (auth.get(0).getRoleCode().equals("ADMIN")) {
-            Page<UsersDtoEvdokimovRD> page = service.getAll(pageable);
-            return new ResponseEntity<>(page, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-        }
+    @PostMapping(value = "/auth/register")
+    public ResponseEntity<?> register(@RequestBody String request) {
+        log.info("AuthControllerEvdokimovRD : register");
+        UsersDtoEvdokimovRD usersDtoEvdokimovRD = service.create(new UserRequestEvdokimovRD(request));
+        return new ResponseEntity<>(usersDtoEvdokimovRD, HttpStatus.CREATED);
     }
 }

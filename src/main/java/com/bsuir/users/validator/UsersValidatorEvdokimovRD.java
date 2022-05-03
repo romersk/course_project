@@ -3,10 +3,12 @@ package com.bsuir.users.validator;
 import com.bsuir.shared.validation.Error;
 import com.bsuir.shared.validation.Validator;
 import com.bsuir.users.entity.UserEvdokimovRD;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UsersValidatorEvdokimovRD implements Validator<UserEvdokimovRD> {
     @Override
     public List<Error> validate(UserEvdokimovRD entity) {

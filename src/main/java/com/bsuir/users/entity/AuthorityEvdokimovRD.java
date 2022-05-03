@@ -1,8 +1,11 @@
 package com.bsuir.users.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "authority")
 @Entity
@@ -17,6 +20,10 @@ public class AuthorityEvdokimovRD implements GrantedAuthority {
 
     @Column(name = "role_description")
     private String roleDescription;
+
+    @ManyToMany(mappedBy = "authorities", targetEntity = UserEvdokimovRD.class)
+    @JsonIgnoreProperties("authorities")
+    private List<UserEvdokimovRD> users;
 
     @Override
     public String getAuthority() {

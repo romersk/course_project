@@ -1,8 +1,9 @@
 package com.bsuir.users.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Table(name = "user")
 @Entity
-@Accessors(chain = true)
+@Proxy(lazy = false)
 public class UserEvdokimovRD implements UserDetails {
 
     @Id
@@ -38,9 +39,9 @@ public class UserEvdokimovRD implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled = true;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = AuthorityEvdokimovRD.class)
     @JoinTable(name = "auth_user", joinColumns = @JoinColumn(referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
-    @JsonManagedReference
+    @JsonIgnoreProperties("users")
     private List<AuthorityEvdokimovRD> authorities;
 
     @OneToOne(cascade = CascadeType.ALL)
