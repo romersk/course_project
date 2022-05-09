@@ -17,7 +17,7 @@ export const authenticateUser = (userName, password) => async (dispatch) => {
       success({
         username: response.data.fio,
         isLoggedIn: true,
-        role: response.data.role,
+        id: response.data.id,
       })
     );
     return Promise.resolve(response.data);

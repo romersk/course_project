@@ -117,6 +117,17 @@ class UserList extends Component {
     this.props.userObject.user = userId;
   };
 
+  downloadFile = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(this.state.result, null, 3)
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "users.txt";
+
+    link.click();
+  };
+
   render() {
     const { result, currentPage, totalPages } = this.state;
     return (
@@ -234,6 +245,11 @@ class UserList extends Component {
                       onClick={this.lastPage}
                     >
                       <FontAwesomeIcon icon={faFastForward} /> Последняя
+                    </Button>
+                  </InputGroup>
+                  <InputGroup>
+                    <Button onClick={this.downloadFile}>
+                      Скачать текстовый отчет
                     </Button>
                   </InputGroup>
                 </InputGroup>

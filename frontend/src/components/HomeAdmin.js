@@ -13,11 +13,15 @@ const HomeAdmin = () => {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
 
-  console.log(auth);
-
   const clickButton = (event) => {
     if (event.target.name === "list") {
       return navigate("/admin/users");
+    }
+    if (event.target.name === "about") {
+      return navigate("/about");
+    }
+    if (event.target.name === "process") {
+      return navigate("/process");
     }
   };
 
@@ -47,7 +51,14 @@ const HomeAdmin = () => {
               Возможность просмотра и редактирования персональной информации о
               пользователе.
             </Card.Text>
-            <Button variant="secondary">Перейти</Button>
+            <Button
+              variant="secondary"
+              type="button"
+              name="about"
+              onClick={clickButton}
+            >
+              Перейти
+            </Button>
           </Card.Body>
         </Card>
         <Card
@@ -84,7 +95,12 @@ const HomeAdmin = () => {
               Просмотр, редактирование, контроль процессов, зарегистрированных в
               программной поддержке.
             </Card.Text>
-            <Button variant="secondary" href="#">
+            <Button
+              variant="secondary"
+              type="button"
+              name="process"
+              onClick={clickButton}
+            >
               Перейти
             </Button>
           </Card.Body>

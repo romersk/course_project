@@ -35,10 +35,10 @@ public class UsersControllerEvdokimovRD {
     }
 
     @PutMapping("/admin/users/{id}")
-    public ResponseEntity<UsersDtoEvdokimovRD> updateUsers(Principal user, @RequestBody UserRequestEvdokimovRD request, @PathVariable Long id) {
+    public ResponseEntity<UsersDtoEvdokimovRD> updateUsers(Principal user, @RequestBody String request, @PathVariable Long id) {
         UserEvdokimovRD userObj = (UserEvdokimovRD) service.loadUserByUsername(user.getName());
         if (AuthorithyEvdokimovRD.getAuthority(userObj).equals("ADMIN")) {
-            UsersDtoEvdokimovRD updatedUser = service.update(request, id);
+            UsersDtoEvdokimovRD updatedUser = service.update(new UserRequestEvdokimovRD(request), id);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);

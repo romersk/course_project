@@ -68,7 +68,7 @@ public class AuthControllerEvdokimovRD {
         } else {
             loginResponseEvdokimovRD.setRole("Пользователь");
         }
-
+        loginResponseEvdokimovRD.setId(userObj.getId());
         return ResponseEntity.ok(loginResponseEvdokimovRD);
     }
 
@@ -80,7 +80,7 @@ public class AuthControllerEvdokimovRD {
         personEvdokimovRD.setFirstName(userObj.getPerson().getFirstName());
         personEvdokimovRD.setSecondName(userObj.getPerson().getSecondName());
 
-        return ResponseEntity.ok(personEvdokimovRD);
+        return ResponseEntity.ok(userObj);
     }
 
     @PostMapping(value = "/auth/register")

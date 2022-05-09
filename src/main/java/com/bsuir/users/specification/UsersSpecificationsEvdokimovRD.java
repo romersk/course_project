@@ -17,7 +17,7 @@ public class UsersSpecificationsEvdokimovRD {
         return new Specification<UserEvdokimovRD>() {
             public Predicate toPredicate(Root<UserEvdokimovRD> root, CriteriaQuery<?> query,
                                          CriteriaBuilder builder) {
-                return builder.greaterThan(root.get("id"),0);
+                return builder.greaterThan(root.get("id"),1);
             }
         };
     }

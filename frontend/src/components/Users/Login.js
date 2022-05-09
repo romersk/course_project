@@ -45,6 +45,9 @@ const Login = (props) => {
         if (response.role === "Администратор") {
           return navigate("/admin/home");
         }
+        if (response.role === "Пользователь") {
+          return navigate("/user/home");
+        }
       })
       .catch((error) => {
         console.log(error.message);

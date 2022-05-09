@@ -1,5 +1,6 @@
 package com.bsuir.users.entity;
 
+import com.bsuir.process.entity.ProcessEvdokimovRD;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
@@ -48,6 +49,10 @@ public class UserEvdokimovRD implements UserDetails {
     @JoinColumn(name = "id", referencedColumnName = "id")
     @JsonManagedReference
     private PersonEvdokimovRD person;
+
+    @OneToMany(mappedBy="user")
+    @JsonManagedReference
+    private List<ProcessEvdokimovRD> process;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -134,5 +139,13 @@ public class UserEvdokimovRD implements UserDetails {
 
     public void setPerson(PersonEvdokimovRD person) {
         this.person = person;
+    }
+
+    public List<ProcessEvdokimovRD> getProcess() {
+        return process;
+    }
+
+    public void setProcess(List<ProcessEvdokimovRD> process) {
+        this.process = process;
     }
 }

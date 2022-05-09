@@ -65,7 +65,6 @@ public class UserServiceEvdokimovRD implements UserDetailsService {
     public Page<UsersDtoEvdokimovRD> getAll(Pageable pageable) {
         final var command = commandFactory.searchQuery();
         Page<UsersDtoEvdokimovRD> page = command.search(UsersSpecificationsEvdokimovRD.getQueryAll(), new PagingImpl(pageable.getPageNumber(), pageable.getPageSize()));
-        //Collections.sort(page.getResult());
         return page;
     }
 }
