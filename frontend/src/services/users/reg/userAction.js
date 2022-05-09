@@ -3,6 +3,20 @@ import axios from "axios";
 
 const REGISTER_URL = "http://localhost:8081/api/v1/auth/register";
 
+export const fetchUsers = () => {
+  return (dispatch) => {
+    dispatch(userRequest());
+    axios
+      .get("http://localhost:8081/api/v1/admin/users")
+      .then((response) => {
+        dispatch(userSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(userFailure(error.message));
+      });
+  };
+};
+
 export const registerUser = (userObject) => async (dispatch) => {
   dispatch(userRequest());
   try {
@@ -28,10 +42,10 @@ const userSavedSuccess = (user) => {
   };
 };
 
-const userSuccess = (users) => {
+const userSuccess = (user) => {
   return {
     type: UT.USER_SUCCESS,
-    payload: users,
+    payload: user,
   };
 };
 

@@ -1,6 +1,22 @@
 import * as BT from "./userListTypes";
 import axios from "axios";
 
+export const saveUser = (user) => {
+  return (dispatch) => {
+    dispatch({
+      type: BT.SAVE_USER_REQUEST,
+    });
+    axios
+      .post("http://localhost:8081/api/v1/admin/users", user)
+      .then((response) => {
+        dispatch(userSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(userFailure(error));
+      });
+  };
+};
+
 export const fetchUser = (userId) => {
   return (dispatch) => {
     dispatch({

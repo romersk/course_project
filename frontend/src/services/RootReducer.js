@@ -5,8 +5,8 @@ import userListReducer from "./users/userList/userListReducer";
 
 const RootReducer = combineReducers({
   auth: reducer,
-  user: userReducer,
-  userList: userListReducer,
+  users: userReducer,
+  user: userListReducer,
 });
 
 export default RootReducer;

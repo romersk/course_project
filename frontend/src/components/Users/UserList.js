@@ -15,7 +15,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faFastBackward } from "@fortawesome/free-solid-svg-icons";
 import { faStepForward } from "@fortawesome/free-solid-svg-icons";
-import { deleteUser } from "../../services";
+import { deleteUser, fetchUsers } from "../../services";
 import { connect } from "react-redux";
 import { faStepBackward } from "@fortawesome/free-solid-svg-icons";
 import { faFastForward } from "@fortawesome/free-solid-svg-icons";
@@ -33,6 +33,7 @@ class UserList extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchUsers();
     this.findAllUsers(this.state.currentPage);
   }
 
@@ -47,7 +48,6 @@ class UserList extends Component {
       )
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         this.setState({
           result: data.result,
           totalPages: data.totalPages,
@@ -113,6 +113,10 @@ class UserList extends Component {
     }
   };
 
+  funcToSetId = (userId) => {
+    this.props.userObject.user = userId;
+  };
+
   render() {
     const { result, currentPage, totalPages } = this.state;
     return (
@@ -158,8 +162,11 @@ class UserList extends Component {
                       <td>{user.authorities[0].roleCode}</td>
                       <td>
                         <ButtonGroup>
+                          <Button onClick={() => this.funcToSetId(user.id)}>
+                            <FontAwesomeIcon icon={faEdit} />
+                          </Button>
                           <Link
-                            to={"edit/" + user.id}
+                            to={"/admin/edit/" + user.id}
                             className="btn btn-sm btn-outline-primary"
                           >
                             <FontAwesomeIcon icon={faEdit} />
@@ -247,6 +254,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    fetchUsers: () => dispatch(fetchUsers()),
     deleteUser: (userId) => dispatch(deleteUser(userId)),
   };
 };

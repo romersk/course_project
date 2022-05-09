@@ -103,6 +103,7 @@ const Register = (props) => {
                       <FontAwesomeIcon icon={faUser} />
                     </InputGroup.Text>
                     <FormControl
+                      required
                       autoComplete="off"
                       type="text"
                       name="userName"
@@ -155,6 +156,7 @@ const Register = (props) => {
                       <FontAwesomeIcon icon={faPassport} />
                     </InputGroup.Text>
                     <FormControl
+                      required
                       autoComplete="off"
                       type="text"
                       name="firstName"

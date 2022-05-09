@@ -1,7 +1,7 @@
 import * as BT from "./userListTypes";
 
 const initialState = {
-  users: "",
+  user: "",
   error: "",
 };
 
@@ -13,12 +13,12 @@ const userListReducer = (state = initialState, action) => {
     case BT.DELETE_USER_REQUEST:
     case BT.USER_SUCCESS:
       return {
-        users: action.payload,
+        user: action.payload,
         error: "",
       };
     case BT.USER_FAILURE:
       return {
-        users: "",
+        user: "",
         error: action.payload,
       };
     default:

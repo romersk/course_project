@@ -13,6 +13,8 @@ const HomeAdmin = () => {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
 
+  console.log(auth);
+
   const clickButton = (event) => {
     if (event.target.name === "list") {
       return navigate("/admin/users");
