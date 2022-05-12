@@ -61,9 +61,9 @@ public class AuthControllerEvdokimovRD {
         List<AuthorityEvdokimovRD> authorithies = (List<AuthorityEvdokimovRD>) userObj.getAuthorities();
         if ("ADMIN".equals(authorithies.get(0).getRoleCode())) {
             loginResponseEvdokimovRD.setRole("Администратор");
-        } else if ("EXPERT".equals(authorithies.get(0))) {
+        } else if ("EXPERT".equals(authorithies.get(0).getRoleCode())) {
             loginResponseEvdokimovRD.setRole("Эксперт");
-        } else if ("LAWYER".equals(authorithies.get(0))) {
+        } else if ("LAWYER".equals(authorithies.get(0).getRoleCode())) {
             loginResponseEvdokimovRD.setRole("Юрист");
         } else {
             loginResponseEvdokimovRD.setRole("Пользователь");

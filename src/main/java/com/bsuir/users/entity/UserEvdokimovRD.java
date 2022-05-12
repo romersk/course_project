@@ -23,7 +23,7 @@ public class UserEvdokimovRD implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name")
     private String userName;
 
     @Column(name = "user_key")

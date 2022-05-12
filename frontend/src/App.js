@@ -16,6 +16,16 @@ import CertificateAbout from "./components/Certifacate/certificate-about";
 import Contacts from "./components/Certifacate/Contacts";
 import Calculator from "./components/Certifacate/Calculator";
 import AddProcess from "./components/Certifacate/AddProcess";
+import HomeExpert from "./components/HomeExpert";
+import AuditCreate from "./components/Process/AuditCreate";
+import TakeAudit from "./components/Process/TakeAudit";
+import EndAudit from "./components/Process/EndAudit";
+import HomeLawyer from "./components/HomeLawyer";
+import CreateDocument from "./components/Document/CreateDocument";
+import CreateDogovor from "./components/Document/CreateDogovor";
+import EndProcess from "./components/Document/EndProcess";
+import AuditList from "./components/Process/AuditList";
+import UserListProcess from "./components/Process/UserListProcess";
 
 const App = () => {
   window.onbeforeunload = (event) => {
@@ -46,6 +56,16 @@ const App = () => {
               <Route path="/admin/users" element={<UserList></UserList>} />
               <Route path="/about" element={<Personal></Personal>}></Route>
               <Route path="/contacts" element={<Contacts></Contacts>}></Route>
+              <Route path="/expert/home" element={<HomeExpert></HomeExpert>}></Route>
+              <Route path="/audit/create" element={<AuditCreate></AuditCreate>}></Route>
+              <Route path="/audit/take" element={<TakeAudit></TakeAudit>}></Route>
+              <Route path="/audit/end" element={<EndAudit></EndAudit>}></Route>
+              <Route path="/lawyer/home" element={<HomeLawyer></HomeLawyer>}></Route>
+              <Route path="/document/create" element={<CreateDocument></CreateDocument>}></Route>
+              <Route path="/document/dogovor" element={<CreateDogovor></CreateDogovor>}></Route>
+              <Route path="/document/end" element={<EndProcess></EndProcess>}></Route>
+              <Route path="/audit/list" element={<AuditList></AuditList>}></Route>
+              <Route path="/user/list" element={<UserListProcess></UserListProcess>}></Route>
               <Route
                 path="/addProcess"
                 element={<AddProcess></AddProcess>}

@@ -20,9 +20,8 @@ public class AuditEvdokimovRD {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "audit")
-    @JsonIgnore
-    private ProcessEvdokimovRD process;
+    @Column(name = "process_id")
+    private Long processId;
 
     @Column(name = "date_start")
     private Date dateStart;
@@ -39,14 +38,6 @@ public class AuditEvdokimovRD {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ProcessEvdokimovRD getProcess() {
-        return process;
-    }
-
-    public void setProcess(ProcessEvdokimovRD process) {
-        this.process = process;
     }
 
     public Date getDateStart() {
@@ -71,5 +62,13 @@ public class AuditEvdokimovRD {
 
     public void setPlan(String plan) {
         this.plan = plan;
+    }
+
+    public Long getProcessId() {
+        return processId;
+    }
+
+    public void setProcessId(Long processId) {
+        this.processId = processId;
     }
 }

@@ -39,11 +39,6 @@ public class ProcessEvdokimovRD {
     @Column(name = "recommendations")
     private String recommendations;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    @JsonIgnore
-    private AuditEvdokimovRD audit;
-
     @OneToMany(mappedBy="process")
     @JsonManagedReference
     private List<DocumentEvdokimovRD> document;
@@ -70,14 +65,6 @@ public class ProcessEvdokimovRD {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public AuditEvdokimovRD getAudit() {
-        return audit;
-    }
-
-    public void setAudit(AuditEvdokimovRD audit) {
-        this.audit = audit;
     }
 
     public String getRecommendations() {

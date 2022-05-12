@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -38,6 +40,28 @@ public class ProcessControllerEvdokimovRD {
         return AuthorithyEvdokimovRD.getAuthority(userObj);
     }
 
+    @GetMapping("/process/userId/{id}")
+    public ResponseEntity<Page<ProcessDtoEvdokimovRD>> findByUserId(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable, @PathVariable Long id) {
+        String role = getRole(user);
+        if (role.equals("USER")) {
+            Page<ProcessDtoEvdokimovRD> page = service.getByIdUser(pageable, id);
+            return new ResponseEntity<>(page, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/process/user/{id}")
+    public ResponseEntity<Page<ProcessDtoEvdokimovRD>> findAll(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable, @PathVariable Long id) {
+        String role = getRole(user);
+        if (role.equals("USER")) {
+            Page<ProcessDtoEvdokimovRD> page = service.getById(pageable, id);
+            return new ResponseEntity<>(page, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+    }
+
     @GetMapping("/process")
     public ResponseEntity<Page<ProcessDtoEvdokimovRD>> findAll(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
         String role = getRole(user);
@@ -49,16 +73,50 @@ public class ProcessControllerEvdokimovRD {
         }
     }
 
-    @GetMapping("/process/{id}")
-    public ResponseEntity<Page<ProcessDtoEvdokimovRD>> findAll(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable, @PathVariable Long id) {
+    @GetMapping("/process/stage/1")
+    public ResponseEntity<List<ProcessDtoEvdokimovRD>> findStageOne(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
         String role = getRole(user);
-        if (role.equals("USER")) {
-            Page<ProcessDtoEvdokimovRD> page = service.getById(pageable, id);
+        if (role.equals("EXPERT")) {
+            List<ProcessDtoEvdokimovRD> page = service.getByStageOne(pageable);
             return new ResponseEntity<>(page, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
     }
+
+    @GetMapping("/process/stage/2")
+    public ResponseEntity<List<ProcessDtoEvdokimovRD>> findStageTwo(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
+        String role = getRole(user);
+        if (role.equals("EXPERT")) {
+            List<ProcessDtoEvdokimovRD> page = service.getByStageTwo(pageable);
+            return new ResponseEntity<>(page, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/process/stage/3")
+    public ResponseEntity<List<ProcessDtoEvdokimovRD>> findStageThree(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
+        String role = getRole(user);
+        if (role.equals("EXPERT")) {
+            List<ProcessDtoEvdokimovRD> page = service.getByStageThree(pageable);
+            return new ResponseEntity<>(page, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/process/stage/4")
+    public ResponseEntity<List<ProcessDtoEvdokimovRD>> findStageFour(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
+        String role = getRole(user);
+        if (role.equals("LAWYER")) {
+            List<ProcessDtoEvdokimovRD> page = service.getByStageFour(pageable);
+            return new ResponseEntity<>(page, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+    }
+
 
     @PostMapping("/process")
     private ResponseEntity<?> createProcess(Principal user, @RequestBody String request) {
@@ -77,7 +135,12 @@ public class ProcessControllerEvdokimovRD {
         if (role.equals("ADMIN") || role.equals("EXPERT") || role.equals("LAWYER")) {
             JSONObject jo = new JSONObject(request);
             ProcessEvdokimovRD entity = repo.getById(id);
-            entity.setStatus(jo.getString("status"));
+            if (jo.has("status")) {
+                entity.setStatus(jo.getString("status"));
+            }
+            if (jo.has("recommendations")) {
+                entity.setRecommendations(jo.getString("recommendations"));
+            }
             repo.save(entity);
             ProcessDtoEvdokimovRD updatedUser = service.update(new ProcessRequestEvdokimovRD(request), id);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);

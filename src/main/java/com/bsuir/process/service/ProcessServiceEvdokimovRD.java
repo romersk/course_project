@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProcessServiceEvdokimovRD {
 
@@ -53,6 +55,36 @@ public class ProcessServiceEvdokimovRD {
     public Page<ProcessDtoEvdokimovRD> getById(Pageable pageable, Long id) {
         final var command = commandFactory.searchQuery();
         Page<ProcessDtoEvdokimovRD> page = command.search(ProcessSpecificationEvdokimovRD.getQueryById(id), new PagingImpl(pageable.getPageNumber(), pageable.getPageSize()));
+        return page;
+    }
+
+    public List<ProcessDtoEvdokimovRD> getByStageOne(Pageable pageable) {
+        final var command = commandFactory.searchQuery();
+        Page<ProcessDtoEvdokimovRD> page = command.search(ProcessSpecificationEvdokimovRD.getQueryByStageOne(), new PagingImpl(pageable.getPageNumber(), pageable.getPageSize()));
+        return page.getResult();
+    }
+
+    public List<ProcessDtoEvdokimovRD> getByStageTwo(Pageable pageable) {
+        final var command = commandFactory.searchQuery();
+        Page<ProcessDtoEvdokimovRD> page = command.search(ProcessSpecificationEvdokimovRD.getQueryByStageTwo(), new PagingImpl(pageable.getPageNumber(), pageable.getPageSize()));
+        return page.getResult();
+    }
+
+    public List<ProcessDtoEvdokimovRD> getByStageThree(Pageable pageable) {
+        final var command = commandFactory.searchQuery();
+        Page<ProcessDtoEvdokimovRD> page = command.search(ProcessSpecificationEvdokimovRD.getQueryByStageThree(), new PagingImpl(pageable.getPageNumber(), pageable.getPageSize()));
+        return page.getResult();
+    }
+
+    public List<ProcessDtoEvdokimovRD> getByStageFour(Pageable pageable) {
+        final var command = commandFactory.searchQuery();
+        Page<ProcessDtoEvdokimovRD> page = command.search(ProcessSpecificationEvdokimovRD.getQueryByStageFour(), new PagingImpl(pageable.getPageNumber(), pageable.getPageSize()));
+        return page.getResult();
+    }
+
+    public Page<ProcessDtoEvdokimovRD> getByIdUser(Pageable pageable, Long id) {
+        final var command = commandFactory.searchQuery();
+        Page<ProcessDtoEvdokimovRD> page = command.search(ProcessSpecificationEvdokimovRD.getQueryByIdUser(id), new PagingImpl(pageable.getPageNumber(), pageable.getPageSize()));
         return page;
     }
 }

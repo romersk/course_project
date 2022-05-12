@@ -30,4 +30,48 @@ public class ProcessSpecificationEvdokimovRD {
             }
         };
     }
+
+    public static Specification<ProcessEvdokimovRD> getQueryByStageOne() {
+        return new Specification<ProcessEvdokimovRD>() {
+            public Predicate toPredicate(Root<ProcessEvdokimovRD> root, CriteriaQuery<?> query,
+                                         CriteriaBuilder builder) {
+                return builder.equal(root.get("status"), "Принят в обработку");
+            }
+        };
+    }
+
+    public static Specification<ProcessEvdokimovRD> getQueryByStageTwo() {
+        return new Specification<ProcessEvdokimovRD>() {
+            public Predicate toPredicate(Root<ProcessEvdokimovRD> root, CriteriaQuery<?> query,
+                                         CriteriaBuilder builder) {
+                return builder.equal(root.get("status"), "Проведение аудита");
+            }
+        };
+    }
+
+    public static Specification<ProcessEvdokimovRD> getQueryByStageThree() {
+        return new Specification<ProcessEvdokimovRD>() {
+            public Predicate toPredicate(Root<ProcessEvdokimovRD> root, CriteriaQuery<?> query,
+                                         CriteriaBuilder builder) {
+                return builder.equal(root.get("status"), "Заключение аудита");
+            }
+        };
+    }
+
+    public static Specification<ProcessEvdokimovRD> getQueryByStageFour() {
+        return new Specification<ProcessEvdokimovRD>() {
+            public Predicate toPredicate(Root<ProcessEvdokimovRD> root, CriteriaQuery<?> query,
+                                         CriteriaBuilder builder) {
+                return builder.equal(root.get("status"), "Оформление документов");
+            }
+        };
+    }
+    public static Specification<ProcessEvdokimovRD> getQueryByIdUser(Long id) {
+        return new Specification<ProcessEvdokimovRD>() {
+            public Predicate toPredicate(Root<ProcessEvdokimovRD> root, CriteriaQuery<?> query,
+                                         CriteriaBuilder builder) {
+                return builder.equal(root.get("startId"), id);
+            }
+        };
+    }
 }

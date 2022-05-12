@@ -13,8 +13,6 @@ const HomeUser = () => {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
 
-  console.log(auth);
-
   const clickButton = (event) => {
     if (event.target.name === "about") {
       return navigate("/about");
@@ -30,6 +28,9 @@ const HomeUser = () => {
     }
     if (event.target.name === "addProcess") {
       return navigate("/addProcess");
+    }
+    if (event.target.name === "list") {
+      return navigate("/user/list");
     }
   };
 
@@ -147,11 +148,16 @@ const HomeUser = () => {
             }}
           >
             <Card.Body>
-              <Card.Title>Получить сертификат</Card.Title>
+              <Card.Title>Контроль процессов сертификации</Card.Title>
               <Card.Text>
-                Получение сертификата о завершенном текущем процессе.
+                Контролирование состояния запрашиваемых процессов ранее
               </Card.Text>
-              <Button variant="secondary" type="button">
+              <Button
+                variant="secondary"
+                type="button"
+                name="list"
+                onClick={clickButton}
+              >
                 Перейти
               </Button>
             </Card.Body>
@@ -177,6 +183,7 @@ const HomeUser = () => {
                 Перейти
               </Button>
             </Card.Body>
+          
           </Card>
         </CardGroup>
       </Row>

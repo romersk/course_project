@@ -79,6 +79,76 @@ export const fetchProcess = () => {
   };
 };
 
+export const fetchProcessByStageOne = () => {
+  return (dispatch) => {
+    dispatch(processRequest());
+    axios
+      .get("http://localhost:8081/api/v1/process/stage/1")
+      .then((response) => {
+        dispatch(processSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(processFailure(error.message));
+      });
+  };
+};
+
+export const fetchProcessByStageTwo = () => {
+  return (dispatch) => {
+    dispatch(processRequest());
+    axios
+      .get("http://localhost:8081/api/v1/process/stage/2")
+      .then((response) => {
+        dispatch(processSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(processFailure(error.message));
+      });
+  };
+};
+
+export const fetchProcessByStageThree = () => {
+  return (dispatch) => {
+    dispatch(processRequest());
+    axios
+      .get("http://localhost:8081/api/v1/process/stage/3")
+      .then((response) => {
+        dispatch(processSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(processFailure(error.message));
+      });
+  };
+};
+
+export const fetchProcessByStageFour = () => {
+  return (dispatch) => {
+    dispatch(processRequest());
+    axios
+      .get("http://localhost:8081/api/v1/process/stage/4")
+      .then((response) => {
+        dispatch(processSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(processFailure(error.message));
+      });
+  };
+};
+
+export const fetchProcessByIdUser = (userId) => {
+  return (dispatch) => {
+    dispatch(processRequest());
+    axios
+      .get("http://localhost:8081/api/v1/process/userId/" + userId)
+      .then((response) => {
+        dispatch(processSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(processFailure(error.message));
+      });
+  };
+};
+
 const processSuccess = (process) => {
   return {
     type: BT.PROCESS_SUCCESS,

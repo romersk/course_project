@@ -48,6 +48,12 @@ const Login = (props) => {
         if (response.role === "Пользователь") {
           return navigate("/user/home");
         }
+        if (response.role === "Эксперт") {
+          return navigate("/expert/home");
+        }
+        if (response.role === "Юрист") {
+          return navigate("/lawyer/home");
+        }
       })
       .catch((error) => {
         console.log(error.message);

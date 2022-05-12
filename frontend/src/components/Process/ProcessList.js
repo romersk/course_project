@@ -120,7 +120,7 @@ class ProcessList extends Component {
               <tbody>
                 {result?.length === 0 ? (
                   <tr align="center">
-                    <td colSpan="7">Пользователи не найдены.</td>
+                    <td colSpan="7">Процессы не найдены.</td>
                   </tr>
                 ) : (
                   result?.map((process) => (
@@ -195,11 +195,6 @@ class ProcessList extends Component {
                       onClick={this.lastPage}
                     >
                       <FontAwesomeIcon icon={faFastForward} /> Последняя
-                    </Button>
-                  </InputGroup>
-                  <InputGroup>
-                    <Button onClick={this.downloadFile}>
-                      Графический отчет
                     </Button>
                   </InputGroup>
                 </InputGroup>

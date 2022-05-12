@@ -47,7 +47,7 @@ public class AuditControllerEvdokimovRD {
     @GetMapping("/audit")
     public ResponseEntity<Page<AuditDtoEvdokimovRD>> findAll(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
         String role = getRole(user);
-        if (role.equals("ADMIN")) {
+        if (role.equals("ADMIN") || role.equals("EXPERT")) {
             Page<AuditDtoEvdokimovRD> page = service.getAll(pageable);
             return new ResponseEntity<>(page, HttpStatus.OK);
         } else {
@@ -58,7 +58,7 @@ public class AuditControllerEvdokimovRD {
     @PostMapping("/audit")
     private ResponseEntity<?> createProcess(Principal user, @RequestBody String request) {
         String role = getRole(user);
-        if (role.equals("ADMIN")) {
+        if (role.equals("EXPERT")) {
             AuditDtoEvdokimovRD created = service.create(new AuditRequestEvdokimovRD(request));
             return new ResponseEntity<>(created, HttpStatus.CREATED);
         } else {
@@ -69,7 +69,7 @@ public class AuditControllerEvdokimovRD {
     @PutMapping("/audit/{id}")
     public ResponseEntity<AuditDtoEvdokimovRD> updateProcess(Principal user, @RequestBody String request, @PathVariable Long id) throws ParseException {
         String role = getRole(user);
-        if (role.equals("ADMIN")) {
+        if (role.equals("EXPERT")) {
             JSONObject jo = new JSONObject(request);
             AuditEvdokimovRD entity = repo.getById(id);
             if (jo.has("dateStart")) {
@@ -106,6 +106,17 @@ public class AuditControllerEvdokimovRD {
         if (role.equals("ADMIN")) {
             service.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/audit/process/{id}")
+    public ResponseEntity<?> getAuditByProcess(Principal user, @PathVariable Long id) {
+        String role = getRole(user);
+        if (role.equals("EXPERT")) {
+            AuditDtoEvdokimovRD auditDtoEvdokimovRD = service.getAuditByProcess(id);
+            return new ResponseEntity<>(auditDtoEvdokimovRD, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }

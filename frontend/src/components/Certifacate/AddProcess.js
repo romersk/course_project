@@ -1,7 +1,6 @@
 import React from "react";
-import { Form, InputGroup, Card, Col, Button, Row } from "react-bootstrap";
+import { Form, InputGroup, Card, Col, Button, Row, Toast } from "react-bootstrap";
 import { useState } from "react";
-import MyToast from "../MyToast";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
@@ -10,8 +9,12 @@ import { faUndo } from "@fortawesome/free-solid-svg-icons";
 import { saveProcess } from "../../services/index";
 
 const AddProcess = (props) => {
-  const [show, setShow] = useState(false);
-  const [message, setMessage] = useState("");
+  const [showA, setShowA] = useState(false);
+  const [showB, setShowB] = useState(false);
+
+  const toggleShowA = () => setShowA(!showA);
+  const toggleShowB = () => setShowB(!showB);
+
   const initialState = {
     startId: useSelector((state) => state.auth).id,
     user: {
@@ -30,8 +33,8 @@ const AddProcess = (props) => {
 
   const saveUser = () => {
     dispatch(saveProcess(user));
-    setShow({ ...show, show: true });
-    setMessage({ ...message, message: "Процесс добавлен успешно" });
+    toggleShowA();
+    toggleShowB();
   };
 
   const resetRegisterForm = () => {
@@ -40,8 +43,10 @@ const AddProcess = (props) => {
 
   return (
     <div>
-      <div style={{ display: show ? "block" : "none" }}>
-        <MyToast show={show} message={message} type={"success"} />
+      <div>
+      <Toast show={showA} onClose={toggleShowA}>
+          <Toast.Body>Процесс успешно Зарегистирован!</Toast.Body>
+        </Toast>
       </div>
       <Row className="justify-content-md-center">
         <Col xs={5}>

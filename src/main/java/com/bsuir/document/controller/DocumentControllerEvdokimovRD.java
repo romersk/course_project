@@ -53,7 +53,7 @@ public class DocumentControllerEvdokimovRD {
     @PostMapping("/document")
     private ResponseEntity<?> createProcess(Principal user, @RequestBody String request) {
         String role = getRole(user);
-        if (role.equals("ADMIN")) {
+        if (role.equals("ADMIN") || role.equals("LAWYER")) {
             DocumentDtoEvdokimovRD created = service.create(new DocumentRequestEvdokimovRD(request));
             return new ResponseEntity<>(created, HttpStatus.CREATED);
         } else {

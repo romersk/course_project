@@ -15,6 +15,7 @@ public class AuditDtoEvdokimovRD implements Dto {
     }
 
     private Long id;
+    private Long processId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateStart;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

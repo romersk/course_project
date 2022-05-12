@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuditRepositoryEvdokimovRD extends EntityCrudRepository<AuditEvdokimovRD, Long> {
+
+    AuditEvdokimovRD findAuditEvdokimovRDByProcessIdEquals(Long processId);
 }

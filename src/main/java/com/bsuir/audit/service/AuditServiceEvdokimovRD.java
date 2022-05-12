@@ -1,13 +1,16 @@
 package com.bsuir.audit.service;
 
 import com.bsuir.audit.dto.AuditDtoEvdokimovRD;
+import com.bsuir.audit.dto.presenter.AuditDtoPresenterEvdokimovRD;
 import com.bsuir.audit.entity.AuditEvdokimovRD;
 import com.bsuir.audit.factory.AuditCommandFactoryEvdokimovRD;
+import com.bsuir.audit.repository.AuditRepositoryEvdokimovRD;
 import com.bsuir.audit.request.AuditRequestEvdokimovRD;
 import com.bsuir.audit.specification.AuditSpecificationEvdokimovRD;
 import com.bsuir.shared.search.Page;
 import com.bsuir.shared.search.Paging;
 import com.bsuir.shared.search.impl.PagingImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,6 +21,15 @@ public class AuditServiceEvdokimovRD {
 
     @Autowired
     private AuditCommandFactoryEvdokimovRD commandFactory;
+
+    @Autowired
+    private AuditRepositoryEvdokimovRD repos;
+
+    public AuditDtoEvdokimovRD getAuditByProcess(final long id) {
+        AuditEvdokimovRD audit = repos.findAuditEvdokimovRDByProcessIdEquals(id);
+        AuditDtoPresenterEvdokimovRD presener = new AuditDtoPresenterEvdokimovRD(new ModelMapper());
+        return presener.map(audit);
+    }
 
     public AuditDtoEvdokimovRD create(final AuditRequestEvdokimovRD request) {
         final var command = commandFactory.createCommand();
