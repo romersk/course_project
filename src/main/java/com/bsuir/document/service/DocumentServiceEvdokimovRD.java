@@ -1,9 +1,5 @@
 package com.bsuir.document.service;
 
-import com.bsuir.audit.dto.AuditDtoEvdokimovRD;
-import com.bsuir.audit.entity.AuditEvdokimovRD;
-import com.bsuir.audit.request.AuditRequestEvdokimovRD;
-import com.bsuir.audit.specification.AuditSpecificationEvdokimovRD;
 import com.bsuir.document.dto.DocumentDtoEvdokimovRD;
 import com.bsuir.document.entity.DocumentEvdokimovRD;
 import com.bsuir.document.factory.DocumentCommandFactoryEvdokimovRD;
